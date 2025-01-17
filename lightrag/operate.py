@@ -576,12 +576,8 @@ async def kg_query(
 ) -> str:
     # Handle cache
     use_model_func = global_config["llm_model_func"]
-    args_hash = compute_args_hash(query_param.mode, query)
-    cached_response, quantized, min_val, max_val = await handle_cache(
-        hashing_kv, args_hash, query, query_param.mode
-    )
-    if cached_response is not None:
-        return cached_response
+    # args_hash = compute_args_hash(query_param.mode, query)
+   
 
     example_number = global_config["addon_params"].get("example_number", None)
     if example_number and example_number < len(PROMPTS["keywords_extraction_examples"]):
@@ -656,8 +652,8 @@ async def kg_query(
         query_param,
     )
 
-    if query_param.only_need_context:
-        return context
+    # if query_param.only_need_context:
+    #     return context
     if context is None:
         return PROMPTS["fail_response"]
     sys_prompt_temp = PROMPTS["rag_response"]
@@ -682,19 +678,18 @@ async def kg_query(
             .strip()
         )
 
-    # Save to cache
-    await save_to_cache(
-        hashing_kv,
-        CacheData(
-            args_hash=args_hash,
-            content=response,
-            prompt=query,
-            quantized=quantized,
-            min_val=min_val,
-            max_val=max_val,
-            mode=query_param.mode,
-        ),
-    )
+    # # Save to cache
+    # await save_to_cache(
+    #     hashing_kv,
+    #     CacheData(
+    #         args_hash=args_hash,
+    #         content=response,
+    #         prompt=query,
+    #         mode=query_param.mode,
+    #     ),
+    # )
+    if query_param.with_retrieval_context:
+        return response, context
     return response
 
 

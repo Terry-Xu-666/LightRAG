@@ -153,32 +153,27 @@ PROMPTS[
 
 PROMPTS["fail_response"] = "Sorry, I'm not able to provide an answer to that question."
 
-PROMPTS["rag_response"] = """---Role---
+PROMPTS["rag_response"] = """
+---Role---
 
-You are a helpful assistant responding to questions about data in the tables provided.
+You are a thorough assistant responding to questions based on retrieved information.
 
 
 ---Goal---
 
-Generate a response of the target length and format that responds to the user's question, summarizing all information in the input data tables appropriate for the response length and format, and incorporating any relevant general knowledge.
-If you don't know the answer, just say so. Do not make anything up.
-Do not include information where the supporting evidence for it is not provided.
+Provide a clear and accurate response. Carefully review and verify the retrieved data, and integrate any relevant necessary knowledge to comprehensively address the user's question. 
+If you are unsure of the answer, just say so. Do not fabricate information. 
+Do not include details not supported by the provided evidence.
 
-When handling relationships with timestamps:
-1. Each relationship has a "created_at" timestamp indicating when we acquired this knowledge
-2. When encountering conflicting relationships, consider both the semantic content and the timestamp
-3. Don't automatically prefer the most recently created relationships - use judgment based on the context
-4. For time-specific queries, prioritize temporal information in the content before considering creation timestamps
 
 ---Target response length and format---
 
 {response_type}
 
----Data tables---
+---Retrived Context and Query---
 
 {context_data}
-
-Add sections and commentary to the response as appropriate for the length and format. Style the response in markdown."""
+"""
 
 PROMPTS["keywords_extraction"] = """---Role---
 
@@ -244,32 +239,26 @@ Output:
 ]
 
 
-PROMPTS["naive_rag_response"] = """---Role---
+PROMPTS["naive_rag_response"] = """
+---Role---
 
-You are a helpful assistant responding to questions about documents provided.
+  You are a thorough assistant responding to questions based on retrieved information.
 
 
 ---Goal---
 
-Generate a response of the target length and format that responds to the user's question, summarizing all information in the input data tables appropriate for the response length and format, and incorporating any relevant general knowledge.
-If you don't know the answer, just say so. Do not make anything up.
-Do not include information where the supporting evidence for it is not provided.
+Provide a clear and accurate response. Carefully review and verify the retrieved data, and integrate any relevant necessary knowledge to comprehensively address the user's question. 
+If you are unsure of the answer, just say so. Do not fabricate information. 
+Do not include details not supported by the provided evidence.
 
-When handling content with timestamps:
-1. Each piece of content has a "created_at" timestamp indicating when we acquired this knowledge
-2. When encountering conflicting information, consider both the content and the timestamp
-3. Don't automatically prefer the most recent content - use judgment based on the context
-4. For time-specific queries, prioritize temporal information in the content before considering creation timestamps
 
 ---Target response length and format---
 
 {response_type}
 
----Documents---
+---Retrived Context and Query---
 
-{content_data}
-
-Add sections and commentary to the response as appropriate for the length and format. Style the response in markdown.
+{context_data}
 """
 
 PROMPTS[
@@ -296,19 +285,16 @@ Similarity score criteria:
 Return only a number between 0-1, without any additional content.
 """
 
-PROMPTS["mix_rag_response"] = """---Role---
+PROMPTS["mix_rag_response"] = """
+---Role---
 
-You are a professional assistant responsible for answering questions based on knowledge graph and textual information. Please respond in the same language as the user's question.
+You are a thorough assistant responding to questions based on retrieved information.
 
 ---Goal---
 
-Generate a concise response that summarizes relevant points from the provided information. If you don't know the answer, just say so. Do not make anything up or include information where the supporting evidence is not provided.
-
-When handling information with timestamps:
-1. Each piece of information (both relationships and content) has a "created_at" timestamp indicating when we acquired this knowledge
-2. When encountering conflicting information, consider both the content/relationship and the timestamp
-3. Don't automatically prefer the most recent information - use judgment based on the context
-4. For time-specific queries, prioritize temporal information in the content before considering creation timestamps
+Provide a clear and accurate response. Carefully review and verify the retrieved data, and integrate any relevant necessary knowledge to comprehensively address the user's question. 
+If you are unsure of the answer, just say so. Do not fabricate information. 
+Do not include details not supported by the provided evidence.
 
 ---Data Sources---
 
@@ -318,15 +304,9 @@ When handling information with timestamps:
 2. Vector Data:
 {vector_context}
 
----Response Requirements---
 
-- Target format and length: {response_type}
-- Use markdown formatting with appropriate section headings
-- Aim to keep content around 3 paragraphs for conciseness
-- Each paragraph should be under a relevant section heading
-- Each section should focus on one main point or aspect of the answer
-- Use clear and descriptive section titles that reflect the content
-- List up to 5 most important reference sources at the end under "References", clearly indicating whether each source is from Knowledge Graph (KG) or Vector Data (VD)
-  Format: [KG/VD] Source content
+---Target response length and format---
 
-Add sections and commentary to the response as appropriate for the length and format. If the provided information is insufficient to answer the question, clearly state that you don't know or cannot provide an answer in the same language as the user's question."""
+{response_type}
+
+"""
