@@ -599,8 +599,8 @@ async def kg_query(
     kw_prompt_temp = PROMPTS["keywords_extraction"]
     kw_prompt = kw_prompt_temp.format(query=query, examples=examples, language=language)
     result = await use_model_func(kw_prompt, keyword_extraction=True)
-    logger.info("kw_prompt result:")
-    print(result)
+    # logger.info("kw_prompt result:")
+    # print(result)
     try:
         # json_text = locate_json_string_body_from_string(result) # handled in use_model_func
         match = re.search(r"\{.*\}", result, re.DOTALL)
@@ -639,7 +639,7 @@ async def kg_query(
     ll_keywords = ", ".join(ll_keywords) if ll_keywords else ""
     hl_keywords = ", ".join(hl_keywords) if hl_keywords else ""
 
-    logger.info("Using %s mode for query processing", query_param.mode)
+    # logger.info("Using %s mode for query processing", query_param.mode)
 
     # Build context
     keywords = [ll_keywords, hl_keywords]
