@@ -22,15 +22,15 @@ class QueryParam:
     response_type: str = "Multiple Paragraphs"
     stream: bool = False
     # Number of top-k items to retrieve; corresponds to entities in "local" mode and relationships in "global" mode.
-    top_k: int = 15
+    top_k: int = 20
     # Number of document chunks to retrieve.
     # top_n: int = 10
     # Number of tokens for the original chunks.
-    max_token_for_text_unit: int = 1300
+    max_token_for_text_unit: int = 1500
     # Number of tokens for the relationship descriptions
-    max_token_for_global_context: int = 1300
+    max_token_for_global_context: int = 1500
     # Number of tokens for the entity descriptions
-    max_token_for_local_context: int = 1300
+    max_token_for_local_context: int = 1500
     hl_keywords: list[str] = field(default_factory=list)
     ll_keywords: list[str] = field(default_factory=list)
 
